@@ -14,6 +14,7 @@ def getHorseResult(html, offset=0):
         data = row.select("td")
         name = str(data[1].string)
         horse_id = data[1].a.get("href").replace("/horse/", "")[:-1]
+        # print(horse_id)
         sex = str(data[2].string)
         birth_year = int(data[3].string)
         stable = str(data[5].a.string)
