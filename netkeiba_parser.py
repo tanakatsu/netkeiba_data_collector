@@ -17,15 +17,27 @@ def getHorseResult(html, offset=0):
         # print(horse_id)
         sex = str(data[2].string)
         birth_year = int(data[3].string)
-        stable = str(data[5].a.string)
-        trainer_id = str(data[5].a.get("href").replace('/trainer/', '')[:-1])
+        if data[5].a:
+            stable = str(data[5].a.string)
+            trainer_id = str(data[5].a.get("href").replace('/trainer/', '')[:-1])
+        else:
+            stable = None
+            trainer_id = None
         sire = str(data[6].a.string)
         mare = str(data[7].a.string)
         bms = str(data[8].a.string)
-        owner = str(data[9].a.string)
-        owner_id = str(data[9].a.get("href").replace('/owner/', '')[:-1])
-        breeder = str(data[10].a.string)
-        breeder_id = str(data[10].a.get("href").replace('/breeder/', '')[:-1])
+        if data[9].a:
+            owner = str(data[9].a.string)
+            owner_id = str(data[9].a.get("href").replace('/owner/', '')[:-1])
+        else:
+            owner = None
+            owner_id = None
+        if data[10].a:
+            breeder = str(data[10].a.string)
+            breeder_id = str(data[10].a.get("href").replace('/breeder/', '')[:-1])
+        else:
+            breeder = None
+            breeder_id = None
         prize = float(data[11].string.replace(',', ''))
         result = {'no': i + offset,
                   'id': horse_id,
