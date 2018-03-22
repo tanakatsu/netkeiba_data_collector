@@ -22,10 +22,10 @@ def main():
     # first page
     html = searchHorse(under_age=target_age, over_age=target_age)
     page_result = getHorseResult(html)
-    print('get {}'.format(len(page_result)))
     serial = getSerial(html)
     next_page = checkIfNextPageExists(html)
     results += page_result
+    print('get {} ({})'.format(len(page_result), len(results)))
     sleep(1)
 
     # after first page
@@ -37,10 +37,10 @@ def main():
             break
         html = getPageBySerial(serial, next_page)
         page_result = getHorseResult(html)
-        print('get {}'.format(len(page_result)))
         serial = getSerial(html)
         next_page = checkIfNextPageExists(html)
         results += page_result
+        print('get {} ({})'.format(len(page_result), len(results)))
         sleep(1)
 
     print(len(results))
