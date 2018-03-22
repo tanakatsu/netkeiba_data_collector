@@ -64,6 +64,8 @@ def searchHorse(**kwargs):
     for k, v in kwargs.items():
         if type(v) is str:
             params[k] = v.encode('euc-jp')
+        elif type(v) is list:
+            params[k + '[]'] = ','.join([str(i) for i in v])
         else:
             params[k] = v
 

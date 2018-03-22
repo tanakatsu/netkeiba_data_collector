@@ -12,15 +12,21 @@ def main():
     parser.add_argument('--age', action='store', type=int, required=True, help='target age')
     parser.add_argument('-n', action='store', type=int, default=None, help='max sample')
     parser.add_argument('--output', '-o', action='store', type=str, default='horse_ranking.csv', help='output filename')
+    parser.add_argument('--include_no_debut', action='store_true', default=False, help='include no debut horses')
     args = parser.parse_args()
 
     target_age = args.age
     max_sample = args.n
     output_filename = args.output
+    include_no_debut = args.include_no_debut
     results = []
 
     # first page
     html = searchHorse(under_age=target_age, over_age=target_age)
+    if include_no_debut:
+        html = searchHorse(under_age=target_age, over_age=target_age)
+    else:
+        html = searchHorse(under_age=target_age, over_age=target_age, grade=[4, 3, 2, 1])  # debut horse only
     page_result = getHorseResult(html)
     serial = getSerial(html)
     next_page = checkIfNextPageExists(html)
