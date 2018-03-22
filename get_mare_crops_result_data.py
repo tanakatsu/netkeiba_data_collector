@@ -6,7 +6,7 @@ import pandas as pd
 from argparse import ArgumentParser
 from tqdm import tqdm
 from time import sleep
-from util import getPage
+from netkeiba_util import getPage
 from netkeiba_parser import getHorseIdByName, getMareCropsResult
 
 

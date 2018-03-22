@@ -3,7 +3,7 @@
 import pandas as pd
 from argparse import ArgumentParser
 from time import sleep
-from util import getSerial, getPageBySerial, checkIfNextPageExists, searchHorse
+from netkeiba_util import getSerial, getPageBySerial, checkIfNextPageExists, searchHorse
 from netkeiba_parser import getHorseResult
 
 

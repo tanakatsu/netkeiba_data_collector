@@ -1,8 +1,7 @@
 # coding: utf-8
 
 from bs4 import BeautifulSoup
-from util import getPage, searchHorse
-import requests
+from netkeiba_util import getPage, searchHorse
 
 
 def getHorseResult(html, offset=0):
