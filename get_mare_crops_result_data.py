@@ -47,10 +47,10 @@ def main():
         html = getPage(url)
         result = getMareCropsResult(html)
         results.append(result)
-        sleep(1)
 
     # update cache
     pickle.dump(horse_ids, open(cache_filename, 'wb'))
+        sleep(0.2)
 
     df_out = pd.DataFrame(results)
     reordered_cols = ['id', 'name', 'crop_count', 'crop_win_count', 'crop_grade_horse_count', 'crop_grade_win_count']

@@ -27,7 +27,7 @@ def main():
         html = getPage(url)
         result = getHorseAdditionalInfo(html)
         results.append(result)
-        sleep(1)
+        sleep(0.2)
 
     df_out = pd.DataFrame(results)
 
