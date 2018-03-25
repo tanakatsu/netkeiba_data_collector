@@ -22,6 +22,7 @@ def main():
 
     results = []
     for id in tqdm(ids):
+        # print(id)
         url = "http://db.netkeiba.com/horse/{id}/".format(id=id)
         html = getPage(url)
         result = getHorseAdditionalInfo(html)

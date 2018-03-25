@@ -441,6 +441,7 @@ def getMareCropsResult(html, offset=0):
 
 
 def getHorseIdByName(name):
+    # print(name)
     html = searchHorse(word=name, match=1, sort='birthyear')
 
     soup = BeautifulSoup(html, "html.parser")
