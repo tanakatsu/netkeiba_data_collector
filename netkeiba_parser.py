@@ -443,13 +443,51 @@ def getMareCropsResult(html, offset=0):
 def getHorseIdByName(name):
     # print(name)
     html = searchHorse(word=name, match=1, sort='birthyear')
+    if html == '':  # something is wrong at server...
+        return None
 
     soup = BeautifulSoup(html, "html.parser")
     if len(soup.select("link[rel='canonical']")) > 0:
         horse_id = soup.select("link[rel='canonical']")[0].get("href").split('/')[-2]
+    elif len(soup.select("td.xml.txt_l a")) > 0:
+        horse_id = soup.select("td.xml.txt_l a")[0].get("href").split('/')[-2]
+    elif len(soup.select("td.bml.txt_l a")) > 0:
+        horse_id = soup.select("td.bml.txt_l a")[0].get("href").split('/')[-2]
     else:
-        horse_id = soup.select("td.xml a")[0].get("href").split('/')[-2]
+        horse_id = None
+
     return horse_id
+
+
+def getHorseIdByName2(name):
+    if name.endswith('ＩＩ'):
+        search_name = name[:-2]
+    elif ' ' in name:
+        search_name = ' '.join(name.split(' ')[:-1])
+    else:
+        search_name = name
+
+    # print(name, search_name)
+    html = searchHorse(word=search_name, sort='birthyear')
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    if len(soup.select("link[rel='canonical']")) > 0:
+        horse_id = soup.select("link[rel='canonical']")[0].get("href").split('/')[-2]
+        return horse_id
+
+    name_tags = soup.select("td.xml.txt_l a")
+    for tag in name_tags:
+        if tag.get("title") == name:
+            horse_id = tag.get("href").split('/')[-2]
+            return horse_id
+
+    name_tags2 = soup.select("td.bml.txt_l a")
+    for tag in name_tags2:
+        if tag.get("title") == name:
+            horse_id = tag.get("href").split('/')[-2]
+            return horse_id
+    return None
 
 
 if __name__ == "__main__":
@@ -462,5 +500,10 @@ if __name__ == "__main__":
     # result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
-    result = getHorseIdByName('スティンガー')
+    # result = getHorseIdByName('スティンガー')
+    # result = getHorseIdByName('トリプレックス')
+
+    # result = getHorseIdByName2('ベラドーラＩＩ')
+    result = getHorseIdByName2('Debit Or Credit')
+
     print(result)

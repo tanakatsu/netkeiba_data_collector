@@ -7,7 +7,7 @@ from argparse import ArgumentParser
 from tqdm import tqdm
 from time import sleep
 from netkeiba_util import getPage
-from netkeiba_parser import getHorseIdByName, getMareCropsResult
+from netkeiba_parser import getHorseIdByName, getHorseIdByName2, getMareCropsResult
 
 
 def main():
@@ -32,14 +32,25 @@ def main():
         horse_ids = {}
 
     results = []
-    for mare in tqdm(mare_names[:3]):
-    # for mare in tqdm(mare_names):
+    for mare in tqdm(mare_names):
         if mare in horse_ids:
             horse_id = horse_ids[mare]
         else:
             horse_id = getHorseIdByName(mare)
+            if not horse_id:
+                # try in partial match mode..
+                horse_id = getHorseIdByName2(mare)
+
+            if not horse_id:
+                print("Warning: horse_id is not found ({})".format(mare))
+                continue
+
             horse_ids[mare] = horse_id
 
+            # update cache
+            pickle.dump(horse_ids, open(cache_filename, 'wb'))
+
+        # skip if we already checked
         if mare in [res['name'] for res in results]:
             continue
 
@@ -47,9 +58,6 @@ def main():
         html = getPage(url)
         result = getMareCropsResult(html)
         results.append(result)
-
-    # update cache
-    pickle.dump(horse_ids, open(cache_filename, 'wb'))
         sleep(0.2)
 
     df_out = pd.DataFrame(results)
