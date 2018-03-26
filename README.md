@@ -17,7 +17,7 @@ And
 - horse additional information
   - birth date and racing result (count of first, second, third and others)
 - mare's children result
-  - childrens's winning count etc..
+  - children's winning count etc..
 
 ### Requirements
 
