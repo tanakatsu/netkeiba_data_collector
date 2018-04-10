@@ -449,10 +449,8 @@ def getHorseIdByName(name):
     soup = BeautifulSoup(html, "html.parser")
     if len(soup.select("link[rel='canonical']")) > 0:
         horse_id = soup.select("link[rel='canonical']")[0].get("href").split('/')[-2]
-    elif len(soup.select("td.xml.txt_l a")) > 0:
-        horse_id = soup.select("td.xml.txt_l a")[0].get("href").split('/')[-2]
-    elif len(soup.select("td.bml.txt_l a")) > 0:
-        horse_id = soup.select("td.bml.txt_l a")[0].get("href").split('/')[-2]
+    elif len(soup.select('table[summary="競走馬検索結果"] td a[title="' + name + '"]')) > 0:
+        horse_id = soup.select('table[summary="競走馬検索結果"] td a[title="' + name + '"]')[0].get("href").split('/')[-2]
     else:
         horse_id = None
 
