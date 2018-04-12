@@ -23,6 +23,7 @@ def main():
 
     df = pd.read_csv(input_filename)
     mare_names = df['mare'].values
+    bms_names = df['bms'].values
     # print(mare_names)
 
     if os.path.exists(cache_filename):
@@ -32,14 +33,14 @@ def main():
         horse_ids = {}
 
     results = []
-    for mare in tqdm(mare_names):
+    for mare, bms in tqdm(zip(mare_names, bms_names)):
         if mare in horse_ids:
             horse_id = horse_ids[mare]
         else:
-            horse_id = getHorseIdByName(mare)
+            horse_id = getHorseIdByName(mare, sire=bms)
             if not horse_id:
                 # try in partial match mode..
-                horse_id = getHorseIdByName2(mare)
+                horse_id = getHorseIdByName2(mare, sire=bms)
 
             if not horse_id:
                 print("Warning: horse_id is not found ({})".format(mare))
@@ -57,6 +58,7 @@ def main():
         url = "http://db.netkeiba.com/horse/{id}/".format(id=horse_id)
         html = getPage(url)
         result = getMareCropsResult(html)
+        # print(result)
         results.append(result)
         sleep(0.2)
 

@@ -440,9 +440,9 @@ def getMareCropsResult(html, offset=0):
     return result
 
 
-def getHorseIdByName(name):
+def getHorseIdByName(name, **kwargs):
     # print(name)
-    html = searchHorse(word=name, match=1, sort='birthyear')
+    html = searchHorse(word=name, match=1, sort='birthyear', **kwargs)
     if html == '':  # something is wrong at server...
         return None
 
@@ -457,7 +457,7 @@ def getHorseIdByName(name):
     return horse_id
 
 
-def getHorseIdByName2(name):
+def getHorseIdByName2(name, **kwargs):
     if name.endswith('ＩＩ'):
         search_name = name[:-2]
     elif ' ' in name:
@@ -466,7 +466,7 @@ def getHorseIdByName2(name):
         search_name = name
 
     # print(name, search_name)
-    html = searchHorse(word=search_name, sort='birthyear')
+    html = searchHorse(word=search_name, sort='birthyear', **kwargs)
 
     soup = BeautifulSoup(html, "html.parser")
 
@@ -495,13 +495,15 @@ if __name__ == "__main__":
 
     # html = getPage("http://db.netkeiba.com/horse/2004104258/")
     # html = getPage("http://db.netkeiba.com/horse/1992108561/")
-    # result = getMareCropsResult(html)
+    # html = getPage("http://db.netkeiba.com/horse/2000106445/")
+    html = getPage("http://db.netkeiba.com/horse/2004102429/")
+    result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
     # result = getHorseIdByName('スティンガー')
     # result = getHorseIdByName('トリプレックス')
 
     # result = getHorseIdByName2('ベラドーラＩＩ')
-    result = getHorseIdByName2('Debit Or Credit')
+    # result = getHorseIdByName2('Debit Or Credit')
 
     print(result)
