@@ -396,7 +396,7 @@ def getHorseAdditionalInfo(html, offset=0):
     else:
         sales_price = None
     race_result = rows[7 + ofs].select("td a")[0].string
-    relatives = '、'.join([a.string for a in rows[9 + ofs].select("td a")])
+    relatives = '、'.join([a.string for a in rows[9 + ofs].select("td a") if a.string])
 
     result = {'id': horse_id,
               'name': name,
