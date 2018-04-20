@@ -382,31 +382,29 @@ def getHorseAdditionalInfo(html, offset=0):
 
     # name = soup.select("div.horse_title h1")[0].string.strip()
     name = soup.select('table[class="tekisei_table"]')[0].get("summary").split('の')[0]
-
+    hair = soup.select("div.horse_title p.txt_01")[0].string.split('　')[-1]
     horse_id = soup.select("div.db_head_regist ul.db_detail_menu li")[1].select("a")[0].get("href").replace('/horse/', '')[:-1]
-
     prof_table = soup.select("table.db_prof_table")[0]
     rows = prof_table.select("tr")
-
     birth_date = rows[0].select('td')[0].string.replace('年', '/').replace('月', '/').replace('日', '')
-
     if rows[3].find('th').string == '募集情報':
         ofs = 1
     else:
         ofs = 0
-
     if '円' in rows[5 + ofs].select('td')[0].get_text():
         sales_price = rows[5 + ofs].select("td")[0].get_text().split('円')[0].replace('億', '').replace('万', '').replace(',', '')
     else:
         sales_price = None
-
     race_result = rows[7 + ofs].select("td a")[0].string
+    relatives = '、'.join([a.string for a in rows[9 + ofs].select("td a")])
 
     result = {'id': horse_id,
               'name': name,
+              'hair': hair,
               'birth_date': birth_date,
               'race_result': race_result,
-              'sales_price': sales_price}
+              'sales_price': sales_price,
+              'relatives': relatives}
     return result
 
 
@@ -489,15 +487,15 @@ def getHorseIdByName2(name, **kwargs):
 
 
 if __name__ == "__main__":
-    # html = getPage("http://db.netkeiba.com/horse/2014102565/")
+    html = getPage("http://db.netkeiba.com/horse/2014102565/")
     # html = getPage("http://db.netkeiba.com/horse/2014106083/")
-    # result = getHorseAdditionalInfo(html)
+    result = getHorseAdditionalInfo(html)
 
     # html = getPage("http://db.netkeiba.com/horse/2004104258/")
     # html = getPage("http://db.netkeiba.com/horse/1992108561/")
     # html = getPage("http://db.netkeiba.com/horse/2000106445/")
-    html = getPage("http://db.netkeiba.com/horse/2004102429/")
-    result = getMareCropsResult(html)
+    # html = getPage("http://db.netkeiba.com/horse/2004102429/")
+    # result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
     # result = getHorseIdByName('スティンガー')
