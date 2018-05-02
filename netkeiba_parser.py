@@ -489,7 +489,7 @@ def getHorseIdByName2(name, **kwargs):
 if __name__ == "__main__":
     html = getPage("http://db.netkeiba.com/horse/2014102565/")
     # html = getPage("http://db.netkeiba.com/horse/2014106083/")
-    result = getHorseAdditionalInfo(html)
+    # result = getHorseAdditionalInfo(html)
 
     # html = getPage("http://db.netkeiba.com/horse/2004104258/")
     # html = getPage("http://db.netkeiba.com/horse/1992108561/")
@@ -500,6 +500,7 @@ if __name__ == "__main__":
     # result = getHorseIdByName('オルフェーヴル')
     # result = getHorseIdByName('スティンガー')
     # result = getHorseIdByName('トリプレックス')
+    result = getHorseIdByName('ラッキーライラック', sex=[2])
 
     # result = getHorseIdByName2('ベラドーラＩＩ')
     # result = getHorseIdByName2('Debit Or Credit')

@@ -57,6 +57,7 @@ def searchHorse(**kwargs):
         'breeder': '',
         'under_age': '',
         'over_age': '',
+        'sex': '',
         'sort': "prize",
         'list': "100"
     }
