@@ -486,8 +486,20 @@ def getHorseIdByName2(name, **kwargs):
     return None
 
 
+def getBreederId(html, offset=0):
+    soup = BeautifulSoup(html, "html.parser")
+
+    link = soup.select("ul.db_detail_menu li a")[0]
+    breeder_id = link.get("href").split('/')[-2]
+    name = link.get("title").replace('の近走成績', '')
+
+    result = {'alt_id': breeder_id,
+              'name': name}
+    return result
+
+
 if __name__ == "__main__":
-    html = getPage("http://db.netkeiba.com/horse/2014102565/")
+    # html = getPage("http://db.netkeiba.com/horse/2014102565/")
     # html = getPage("http://db.netkeiba.com/horse/2014106083/")
     # result = getHorseAdditionalInfo(html)
 
@@ -500,9 +512,12 @@ if __name__ == "__main__":
     # result = getHorseIdByName('オルフェーヴル')
     # result = getHorseIdByName('スティンガー')
     # result = getHorseIdByName('トリプレックス')
-    result = getHorseIdByName('ラッキーライラック', sex=[2])
+    # result = getHorseIdByName('ラッキーライラック', sex=[2])
 
     # result = getHorseIdByName2('ベラドーラＩＩ')
     # result = getHorseIdByName2('Debit Or Credit')
+
+    html = getPage("http://db.netkeiba.com/breeder/373126/")
+    result = getBreederId(html)
 
     print(result)
