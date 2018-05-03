@@ -7,8 +7,10 @@ from bs4 import BeautifulSoup
 
 def getPage(url):
     res = requests.get(url)
-    res.encoding = res.apparent_encoding
+    # res.encoding = res.apparent_encoding
+    res.encoding = 'EUC-JP'
     html = res.text
+    # print(res.encoding)
     return html
 
 
