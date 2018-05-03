@@ -10,6 +10,19 @@ from netkeiba_util import getPage
 from netkeiba_parser import getHorseIdByName, getHorseIdByName2, getMareCropsResult
 
 
+bms_conv_tbl = {
+    "ファスリエフ": "Fasliyev",
+    "キングズベスト": "King's Best",
+    "アルデバランＩＩ": "アルデバラン",
+    "Street Cry": "ストリートクライ",
+    "ディスクリートキャット": "Discreet Cat"
+}
+
+mare_conv_tbl = {
+    "Pennedepie": "ペンネドゥピー"
+}
+
+
 def main():
     parser = ArgumentParser()
     parser.add_argument('--input', '-i', action='store', type=str, default='horse_ranking.csv', help='horse data csv')
@@ -33,17 +46,29 @@ def main():
         horse_ids = {}
 
     results = []
-    for mare, bms in tqdm(zip(mare_names, bms_names)):
+    for mare, bms in tqdm(zip(mare_names, bms_names), total=len(mare_names)):
         if mare in horse_ids:
             horse_id = horse_ids[mare]
         else:
-            horse_id = getHorseIdByName(mare, sire=bms)
+            if mare in mare_conv_tbl:
+                mare = mare_conv_tbl[mare]
+
+            horse_id = getHorseIdByName(mare, sire=bms, sex=[2])
             if not horse_id:
                 # try in partial match mode..
-                horse_id = getHorseIdByName2(mare, sire=bms)
+                horse_id = getHorseIdByName2(mare, sire=bms, sex=[2])
 
             if not horse_id:
-                print("Warning: horse_id is not found ({})".format(mare))
+                if bms in bms_conv_tbl:
+                    horse_id = getHorseIdByName2(mare, sire=bms_conv_tbl[bms], sex=[2])
+
+            if not horse_id:
+                # try without sire parameter
+                horse_id = getHorseIdByName(mare, sex=[2])
+                print("WARNING: horse_id is found without sire parameter ({})".format(mare))
+
+            if not horse_id:
+                print("WARNING: horse_id is not found ({})".format(mare))
                 continue
 
             horse_ids[mare] = horse_id
