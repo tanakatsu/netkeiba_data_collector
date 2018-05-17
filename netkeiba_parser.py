@@ -398,13 +398,23 @@ def getHorseAdditionalInfo(html, offset=0):
     race_result = rows[7 + ofs].select("td a")[0].string
     relatives = '、'.join([a.string for a in rows[9 + ofs].select("td a") if a.string])
 
+    debut_weight = None
+    races = soup.select('div.db_main_deta table tbody tr')
+    if len(races) > 0:
+        first_race = races[-1]
+        first_race_data = first_race.select('td')
+        weight = first_race_data[23].string
+        if not weight == '計不':
+            debut_weight = int(weight.replace('(0)', ''))
+
     result = {'id': horse_id,
               'name': name,
               'hair': hair,
               'birth_date': birth_date,
               'race_result': race_result,
               'sales_price': sales_price,
-              'relatives': relatives}
+              'relatives': relatives,
+              'debut_weight': debut_weight}
     return result
 
 
