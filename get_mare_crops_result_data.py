@@ -15,7 +15,8 @@ bms_conv_tbl = {
     "キングズベスト": "King's Best",
     "アルデバランＩＩ": "アルデバラン",
     "Street Cry": "ストリートクライ",
-    "ディスクリートキャット": "Discreet Cat"
+    "ディスクリートキャット": "Discreet Cat",
+    "Dylan Thomas": "ディラントーマス",
 }
 
 mare_conv_tbl = {
@@ -80,7 +81,7 @@ def main():
         if mare in [res['name'] for res in results]:
             continue
 
-        url = "http://db.netkeiba.com/horse/{id}/".format(id=horse_id)
+        url = "https://db.netkeiba.com/horse/{id}/".format(id=horse_id)
         html = getPage(url)
         result = getMareCropsResult(html)
         # print(result)
