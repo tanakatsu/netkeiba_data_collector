@@ -509,14 +509,15 @@ def getBreederId(html, offset=0):
 
 
 if __name__ == "__main__":
-    # html = getPage("http://db.netkeiba.com/horse/2014102565/")
-    # html = getPage("http://db.netkeiba.com/horse/2014106083/")
-    # result = getHorseAdditionalInfo(html)
+    # html = getPage("https://db.netkeiba.com/horse/2014102565/")
+    html = getPage("https://db.netkeiba.com/horse/2015102894/")
+    # html = getPage("https://db.netkeiba.com/horse/2014106083/")
+    result = getHorseAdditionalInfo(html)
 
-    # html = getPage("http://db.netkeiba.com/horse/2004104258/")
-    # html = getPage("http://db.netkeiba.com/horse/1992108561/")
-    # html = getPage("http://db.netkeiba.com/horse/2000106445/")
-    # html = getPage("http://db.netkeiba.com/horse/2004102429/")
+    # html = getPage("https://db.netkeiba.com/horse/2004104258/")
+    # html = getPage("https://db.netkeiba.com/horse/1992108561/")
+    # html = getPage("https://db.netkeiba.com/horse/2000106445/")
+    # html = getPage("https://db.netkeiba.com/horse/2004102429/")
     # result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
@@ -527,7 +528,7 @@ if __name__ == "__main__":
     # result = getHorseIdByName2('ベラドーラＩＩ')
     # result = getHorseIdByName2('Debit Or Credit')
 
-    html = getPage("http://db.netkeiba.com/breeder/373126/")
-    result = getBreederId(html)
+    # html = getPage("https://db.netkeiba.com/breeder/373126/")
+    # result = getBreederId(html)
 
     print(result)

@@ -15,7 +15,7 @@ def getPage(url):
 
 
 def getPageBySerial(serial, page=2):
-    url = 'http://db.netkeiba.com'
+    url = 'https://db.netkeiba.com'
     params = {
         'pid': 'horse_list',
         'sort_key': 'prize',
@@ -46,7 +46,7 @@ def checkIfNextPageExists(html):
 
 
 def searchHorse(**kwargs):
-    url = 'http://db.netkeiba.com'
+    url = 'https://db.netkeiba.com'
     params = {
         'pid': 'horse_list',
         'word': '',
