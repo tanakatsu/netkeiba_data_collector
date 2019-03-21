@@ -89,7 +89,7 @@ def main():
         sleep(0.2)
 
     df_out = pd.DataFrame(results)
-    reordered_cols = ['id', 'name', 'crop_count', 'crop_win_count', 'crop_grade_horse_count', 'crop_grade_win_count']
+    reordered_cols = ['id', 'name', 'birth_date', 'race_result', 'crop_count', 'crop_win_count', 'crop_grade_horse_count', 'crop_grade_win_count']
     df_out = df_out[reordered_cols]
     df_out.to_csv(output_filename)
 

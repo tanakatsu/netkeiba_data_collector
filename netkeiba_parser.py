@@ -439,8 +439,20 @@ def getMareCropsResult(html, offset=0):
         crop_grade_horse_count = None
         crop_win_count = None
 
+    profile_rows = soup.select("div.db_prof_area_02 table tr")
+    birth_date = None
+    race_result = None
+    for row in profile_rows:
+        if row.find("th"):
+            if row.find("th").string == '生年月日':
+                birth_date = row.find("td").string.replace('年', '/').replace('月', '/').replace('日', '')
+            elif row.find("th").string == '通算成績':
+                race_result = row.select("td a")[0].string
+
     result = {'id': horse_id,
               'name': name,
+              'birth_date': birth_date,
+              'race_result': race_result,
               'crop_count': crop_count,
               'crop_grade_win_count': crop_grade_win_count,
               'crop_grade_horse_count': crop_grade_horse_count,
@@ -512,13 +524,14 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2014102565/")
     html = getPage("https://db.netkeiba.com/horse/2015102894/")
     # html = getPage("https://db.netkeiba.com/horse/2014106083/")
-    result = getHorseAdditionalInfo(html)
+    # result = getHorseAdditionalInfo(html)
 
     # html = getPage("https://db.netkeiba.com/horse/2004104258/")
     # html = getPage("https://db.netkeiba.com/horse/1992108561/")
     # html = getPage("https://db.netkeiba.com/horse/2000106445/")
     # html = getPage("https://db.netkeiba.com/horse/2004102429/")
-    # result = getMareCropsResult(html)
+    html = getPage("https://db.netkeiba.com/horse/000a013c70")
+    result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
     # result = getHorseIdByName('スティンガー')
