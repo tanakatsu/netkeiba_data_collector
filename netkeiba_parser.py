@@ -521,9 +521,31 @@ def getBreederId(html, offset=0):
     return result
 
 
+def getHorseRaceResults(html):
+    soup = BeautifulSoup(html, "html.parser")
+    races = soup.select('table[class="db_h_race_results nk_tb_common"] tbody tr')
+    results = []
+    for race in races:
+        race_data = {}
+        race_info_items = race.select("td")
+        race_data['date'] = race_info_items[0].find("a").text
+        if race_info_items[27].text == '\xa0':
+            race_data['prize'] = 0
+        else:
+            race_data['prize'] = float(race_info_items[27].text.replace(",", ""))
+        try:
+            race_data['place'] = int(race_info_items[11].text)
+        except ValueError:
+            race_data['place'] = None
+        race_data['name'] = race_info_items[4].text
+        results.append(race_data)
+
+    return results[::-1]
+
+
 if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2014102565/")
-    html = getPage("https://db.netkeiba.com/horse/2015102894/")
+    # html = getPage("https://db.netkeiba.com/horse/2015102894/")
     # html = getPage("https://db.netkeiba.com/horse/2014106083/")
     # result = getHorseAdditionalInfo(html)
 
@@ -532,8 +554,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2000106445/")
     # html = getPage("https://db.netkeiba.com/horse/2004102429/")
     # html = getPage("https://db.netkeiba.com/horse/000a013c70")
-    html = getPage("https://db.netkeiba.com/horse/000a011df8/")
-    result = getMareCropsResult(html)
+    # html = getPage("https://db.netkeiba.com/horse/000a011df8/")
+    # result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
     # result = getHorseIdByName('スティンガー')
@@ -545,5 +567,8 @@ if __name__ == "__main__":
 
     # html = getPage("https://db.netkeiba.com/breeder/373126/")
     # result = getBreederId(html)
+
+    html = getPage("https://db.netkeiba.com/horse/2014106083/")
+    result = getHorseRaceResults(html)
 
     print(result)
