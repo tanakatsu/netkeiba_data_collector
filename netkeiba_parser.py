@@ -446,6 +446,7 @@ def getMareCropsResult(html, offset=0):
         if row.find("th"):
             if row.find("th").string == '生年月日':
                 birth_date = row.find("td").string.replace('年', '/').replace('月', '/').replace('日', '')
+                birth_date = birth_date.rstrip('/')
             elif row.find("th").string == '通算成績':
                 race_result = row.select("td a")[0].string
 
@@ -530,7 +531,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/1992108561/")
     # html = getPage("https://db.netkeiba.com/horse/2000106445/")
     # html = getPage("https://db.netkeiba.com/horse/2004102429/")
-    html = getPage("https://db.netkeiba.com/horse/000a013c70")
+    # html = getPage("https://db.netkeiba.com/horse/000a013c70")
+    html = getPage("https://db.netkeiba.com/horse/000a011df8/")
     result = getMareCropsResult(html)
 
     # result = getHorseIdByName('オルフェーヴル')
