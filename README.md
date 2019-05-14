@@ -18,6 +18,8 @@ And
   - birth date and racing result (count of first, second, third and others)
 - mare's children result
   - children's winning count etc..
+- horse race result histories
+  - race date, race name, place, prize
 
 ### Requirements
 
@@ -67,6 +69,13 @@ And
 
   ```
   $ get_mare_crops_result_data.py -i output_of_get_horse_data [-o output_filename]
+  ```
+- horse race result history
+
+  This script requires output file of `get_horse_data.py` as input file.
+
+  ```
+  $ get_horse_race_result_data.py -i output_of_get_horse_data [--output_dir output_dir] [-n max_samples]
   ```
 
 ### License
