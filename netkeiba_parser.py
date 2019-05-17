@@ -543,6 +543,23 @@ def getHorseRaceResults(html):
     return results[::-1]
 
 
+def getMareCrops(html):
+    soup = BeautifulSoup(html, "html.parser")
+    tr_elms = soup.select('table[class="nk_tb_common race_table_01"] tr')
+    crops = []
+    for tr_elm in tr_elms[1:]:
+        td_elms = tr_elm.select("td")
+        year = int(td_elms[0].text)
+        name = td_elms[1].text
+        horse_id = int(td_elms[1].find('a').get('href').split('/')[2])
+        sire = td_elms[3].text.strip()
+        crops.append({'year': year,
+                      'name': name,
+                      'horse_id': horse_id,
+                      'sire': sire})
+    return crops[::-1]
+
+
 if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2014102565/")
     # html = getPage("https://db.netkeiba.com/horse/2015102894/")
@@ -568,7 +585,10 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/breeder/373126/")
     # result = getBreederId(html)
 
-    html = getPage("https://db.netkeiba.com/horse/2014106083/")
-    result = getHorseRaceResults(html)
+    # html = getPage("https://db.netkeiba.com/horse/2014106083/")
+    # result = getHorseRaceResults(html)
+
+    html = getPage("https://db.netkeiba.com/horse/mare/2002100844/")
+    result = getMareCrops(html)
 
     print(result)
