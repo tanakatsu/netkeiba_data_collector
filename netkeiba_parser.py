@@ -407,8 +407,14 @@ def getHorseAdditionalInfo(html, offset=0):
         if not weight == '計不':
             debut_weight = int(weight.replace('(0)', ''))
 
+    blood = soup.select('table.blood_table tr td')
+    sire_id = int(blood[0].find('a').get('href').split('/')[3])
+    mare_id = int(blood[3].find('a').get('href').split('/')[3])
+
     result = {'id': horse_id,
               'name': name,
+              'sire_id': sire_id,
+              'mare_id': mare_id,
               'hair': hair,
               'birth_date': birth_date,
               'race_result': race_result,

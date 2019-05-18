@@ -31,7 +31,7 @@ def main():
 
     df_out = pd.DataFrame(results)
 
-    reordered_cols = ['id', 'name', 'hair', 'birth_date', 'race_result', 'debut_weight', 'sales_price', 'relatives']
+    reordered_cols = ['id', 'name', 'sire_id', 'mare_id', 'hair', 'birth_date', 'race_result', 'debut_weight', 'sales_price', 'relatives']
     df_out = df_out[reordered_cols]
     df_out.to_csv(output_filename)
 
