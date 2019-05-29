@@ -393,6 +393,14 @@ def getHorseAdditionalInfo(html, offset=0):
     # name = soup.select("div.horse_title h1")[0].string.strip()
     name = soup.select('table[class="tekisei_table"]')[0].get("summary").split('の')[0]
     hair = soup.select("div.horse_title p.txt_01")[0].string.split('　')[-1]
+    if "□地" in soup.select("div.horse_title h1")[0].text:
+        kakuchi = True
+    else:
+        kakuchi = False
+    if "○地" in soup.select("div.horse_title h1")[0].text:
+        maruchi = True
+    else:
+        maruchi = False
     horse_id = soup.select("div.db_head_regist ul.db_detail_menu li")[1].select("a")[0].get("href").replace('/horse/', '')[:-1]
     prof_table = soup.select("table.db_prof_table")[0]
     rows = prof_table.select("tr")
@@ -430,7 +438,9 @@ def getHorseAdditionalInfo(html, offset=0):
               'race_result': race_result,
               'sales_price': sales_price,
               'relatives': relatives,
-              'debut_weight': debut_weight}
+              'debut_weight': debut_weight,
+              'kakuchi': kakuchi,
+              'maruchi': maruchi}
     return result
 
 
@@ -582,7 +592,9 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2014102565/")
     # html = getPage("https://db.netkeiba.com/horse/2015102894/")
     # html = getPage("https://db.netkeiba.com/horse/2014106083/")
-    # result = getHorseAdditionalInfo(html)
+    # html = getPage("https://db.netkeiba.com/horse/2016100893/")
+    html = getPage("https://db.netkeiba.com/horse/2016103387/")
+    result = getHorseAdditionalInfo(html)
 
     # html = getPage("https://db.netkeiba.com/horse/2004104258/")
     # html = getPage("https://db.netkeiba.com/horse/1992108561/")
@@ -606,7 +618,7 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2014106083/")
     # result = getHorseRaceResults(html)
 
-    html = getPage("https://db.netkeiba.com/horse/mare/2002100844/")
-    result = getMareCrops(html)
+    # html = getPage("https://db.netkeiba.com/horse/mare/2002100844/")
+    # result = getMareCrops(html)
 
     print(result)
