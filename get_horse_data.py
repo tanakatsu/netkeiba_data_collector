@@ -50,22 +50,22 @@ def main():
         sleep(1)
 
     print(len(results))
-    df = pd.DataFrame(results)
-    reordered_cols = ['id',
-                      'name',
-                      'sex',
-                      'birth_year',
-                      'stable',
-                      'trainer_id',
-                      'sire',
-                      'mare',
-                      'bms',
-                      'owner',
-                      'owner_id',
-                      'breeder',
-                      'breeder_id',
-                      'prize']
-    df = df[reordered_cols]
+    cols = ['id',
+            'name',
+            'sex',
+            'birth_year',
+            'stable',
+            'stable_loc',
+            'trainer_id',
+            'sire',
+            'mare',
+            'bms',
+            'owner',
+            'owner_id',
+            'breeder',
+            'breeder_id',
+            'prize']
+    df = pd.DataFrame(results, columns=cols)
     df.to_csv(output_filename)
 
 

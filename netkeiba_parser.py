@@ -19,9 +19,18 @@ def getHorseResult(html, offset=0):
         if data[5].a:
             stable = str(data[5].a.string)
             trainer_id = str(data[5].a.get("href").replace('/trainer/', '')[:-1])
+            if "[西]" in data[5].text:
+                stable_loc = "栗東"
+            elif "[東]" in data[5].text:
+                stable_loc = "美浦"
+            elif "[地]" in data[5].text:
+                stable_loc = "地方"
+            else:
+                stable_loc = None
         else:
             stable = None
             trainer_id = None
+            stable_loc = None
         sire = str(data[6].a.string)
         mare = str(data[7].a.string)
         bms = str(data[8].a.string)
@@ -44,6 +53,7 @@ def getHorseResult(html, offset=0):
                   'sex': sex,
                   'birth_year': birth_year,
                   'stable': stable,
+                  'stable_loc': stable_loc,
                   'trainer_id': trainer_id,
                   'sire': sire,
                   'mare': mare,
