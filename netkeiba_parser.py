@@ -426,8 +426,8 @@ def getHorseAdditionalInfo(html, offset=0):
             debut_weight = int(weight.replace('(0)', ''))
 
     blood = soup.select('table.blood_table tr td')
-    sire_id = int(blood[0].find('a').get('href').split('/')[3])
-    mare_id = int(blood[3].find('a').get('href').split('/')[3])
+    sire_id = blood[0].find('a').get('href').split('/')[3]
+    mare_id = blood[3].find('a').get('href').split('/')[3]
 
     result = {'id': horse_id,
               'name': name,
@@ -593,7 +593,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2015102894/")
     # html = getPage("https://db.netkeiba.com/horse/2014106083/")
     # html = getPage("https://db.netkeiba.com/horse/2016100893/")
-    html = getPage("https://db.netkeiba.com/horse/2016103387/")
+    # html = getPage("https://db.netkeiba.com/horse/2016103387/")
+    html = getPage("https://db.netkeiba.com/horse/2016104532/")
     result = getHorseAdditionalInfo(html)
 
     # html = getPage("https://db.netkeiba.com/horse/2004104258/")
