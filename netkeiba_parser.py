@@ -564,6 +564,10 @@ def getHorseRaceResults(html):
         except ValueError:
             race_data['place'] = None
         race_data['name'] = race_info_items[4].text
+        try:
+            race_data['weight'] = int(race_info_items[23].text.split('(')[0])
+        except ValueError:
+            race_data['weight'] = None
         results.append(race_data)
 
     return results[::-1]
@@ -594,8 +598,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2014106083/")
     # html = getPage("https://db.netkeiba.com/horse/2016100893/")
     # html = getPage("https://db.netkeiba.com/horse/2016103387/")
-    html = getPage("https://db.netkeiba.com/horse/2016104532/")
-    result = getHorseAdditionalInfo(html)
+    # html = getPage("https://db.netkeiba.com/horse/2016104532/")
+    # result = getHorseAdditionalInfo(html)
 
     # html = getPage("https://db.netkeiba.com/horse/2004104258/")
     # html = getPage("https://db.netkeiba.com/horse/1992108561/")
@@ -616,8 +620,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/breeder/373126/")
     # result = getBreederId(html)
 
-    # html = getPage("https://db.netkeiba.com/horse/2014106083/")
-    # result = getHorseRaceResults(html)
+    html = getPage("https://db.netkeiba.com/horse/2014106083/")
+    result = getHorseRaceResults(html)
 
     # html = getPage("https://db.netkeiba.com/horse/mare/2002100844/")
     # result = getMareCrops(html)
