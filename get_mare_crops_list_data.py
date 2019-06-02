@@ -12,7 +12,7 @@ from netkeiba_parser import getMareCrops
 def main():
     parser = ArgumentParser()
     parser.add_argument('--output_dir', action='store', type=str, default='.', help='output directory filename')
-    parser.add_argument('--ids', action='store', nargs='+', type=int, required=True, help='target id list')
+    parser.add_argument('--ids', action='store', nargs='+', type=str, required=True, help='target id list')
     args = parser.parse_args()
 
     output_dirname = args.output_dir
