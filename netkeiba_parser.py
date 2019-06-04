@@ -581,7 +581,7 @@ def getMareCrops(html):
         td_elms = tr_elm.select("td")
         year = int(td_elms[0].text)
         name = td_elms[1].text
-        horse_id = int(td_elms[1].find('a').get('href').split('/')[2])
+        horse_id = td_elms[1].find('a').get('href').split('/')[2]
         sex = td_elms[2].text
         sire = td_elms[3].text.strip()
         crops.append({'year': year,
