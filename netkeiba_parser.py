@@ -579,7 +579,11 @@ def getMareCrops(html):
     crops = []
     for tr_elm in tr_elms[1:]:
         td_elms = tr_elm.select("td")
-        year = int(td_elms[0].text)
+        try:
+            year = int(td_elms[0].text)
+        except ValueError:
+            # 空の場合あり (https://db.netkeiba.com/horse/mare/2001100076）
+            continue
         name = td_elms[1].text
         horse_id = td_elms[1].find('a').get('href').split('/')[2]
         sex = td_elms[2].text
