@@ -10,15 +10,19 @@ from netkeiba_parser import getHorseAdditionalInfo
 
 def main():
     parser = ArgumentParser()
-    parser.add_argument('--input', '-i', action='store', type=str, default='horse_ranking.csv', help='horse data csv')
+    parser.add_argument('--input', '-i', action='store', type=str, default=None, help='horse data csv')
     parser.add_argument('--output', '-o', action='store', type=str, default='horse_data.additional.csv', help='output filename')
+    parser.add_argument('ids', type=str, nargs='+')
     args = parser.parse_args()
 
     input_filename = args.input
     output_filename = args.output
 
-    df = pd.read_csv(input_filename)
-    ids = df['id'].values
+    ids = []
+    if input_filename:
+        df = pd.read_csv(input_filename)
+        ids.extend(df['id'].values)
+    ids.extend(args.ids)
 
     results = []
     for id in tqdm(ids):
