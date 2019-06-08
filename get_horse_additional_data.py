@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from tqdm import tqdm
 from time import sleep
 from netkeiba_util import getPage
-from netkeiba_parser import getHorseAdditionalInfo
+from netkeiba_parser import getHorseProfile
 
 
 def main():
@@ -29,7 +29,7 @@ def main():
         # print(id)
         url = "http://db.netkeiba.com/horse/{id}/".format(id=id)
         html = getPage(url)
-        result = getHorseAdditionalInfo(html)
+        result = getHorseProfile(html)
         results.append(result)
         sleep(0.2)
 

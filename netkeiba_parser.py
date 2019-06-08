@@ -388,7 +388,7 @@ def getJockeyResult(html, offset=0):
     return results
 
 
-def getHorseAdditionalInfo(html, offset=0):
+def getHorseProfile(html, offset=0):
     soup = BeautifulSoup(html, "html.parser")
 
     # name = soup.select("div.horse_title h1")[0].string.strip()
@@ -633,7 +633,7 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2016103387/")
     # html = getPage("https://db.netkeiba.com/horse/2016104532/")
     html = getPage("https://db.netkeiba.com/horse/2001100925/")
-    result = getHorseAdditionalInfo(html)
+    result = getHorseProfile(html)
 
     # html = getPage("https://db.netkeiba.com/horse/2004104258/")
     # html = getPage("https://db.netkeiba.com/horse/1992108561/")
