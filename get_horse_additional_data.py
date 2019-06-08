@@ -33,7 +33,7 @@ def main():
         results.append(result)
         sleep(0.2)
 
-    cols = ['id', 'name', 'sire_id', 'mare_id', 'hair', 'birth_date', 'race_result', 'debut_weight', 'sales_price', 'relatives', 'maruchi', 'kakuchi']
+    cols = ['id', 'name', 'sire', 'sire_id', 'mare', 'mare_id', 'bms', 'bms_id', 'hair', 'sex', 'birth_date', 'trainer', 'trainer_id', 'owner', 'owner_id', 'breeder', 'breeder_id', 'prize', 'race_result', 'debut_weight', 'sales_price', 'relatives', 'maruchi', 'kakuchi']
     df_out = pd.DataFrame(results, columns=cols)
     df_out.to_csv(output_filename, index=False)
 

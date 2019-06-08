@@ -2,6 +2,7 @@
 
 from bs4 import BeautifulSoup
 from netkeiba_util import getPage, searchHorse
+import re
 
 
 def getHorseResult(html, offset=0):
@@ -393,6 +394,8 @@ def getHorseAdditionalInfo(html, offset=0):
     # name = soup.select("div.horse_title h1")[0].string.strip()
     name = soup.select('table[class="tekisei_table"]')[0].get("summary").split('の')[0]
     hair = soup.select("div.horse_title p.txt_01")[0].string.split('　')[-1]
+    sex = soup.select("div.horse_title p.txt_01")[0].string.split('　')[1]
+    sex = re.sub('\d+歳', '', sex)
     if "□地" in soup.select("div.horse_title h1")[0].text:
         kakuchi = True
     else:
@@ -405,6 +408,10 @@ def getHorseAdditionalInfo(html, offset=0):
     prof_table = soup.select("table.db_prof_table")[0]
     rows = prof_table.select("tr")
     birth_date = rows[0].select('td')[0].string.replace('年', '/').replace('月', '/').replace('日', '')
+    trainer = rows[1].select('td a')[0].string
+    trainer_id = rows[1].select('td a')[0].get("href").split('/')[2]
+    owner = rows[2].select('td a')[0].string
+    owner_id = rows[2].select('td a')[0].get("href").split('/')[2]
     if rows[3].find('th').string == '募集情報':
         ofs = 1
     else:
@@ -413,6 +420,12 @@ def getHorseAdditionalInfo(html, offset=0):
         sales_price = rows[5 + ofs].select("td")[0].get_text().split('円')[0].replace('億', '').replace('万', '').replace(',', '')
     else:
         sales_price = None
+    breeder = rows[3 + ofs].select('td a')[0].string
+    breeder_id = rows[3 + ofs].select('td a')[0].get("href").split('/')[2]
+    prize = 0
+    all_prizes = rows[6 + ofs].select('td')[0].string.strip().split('/')
+    for prize_str in all_prizes:
+        prize += int(prize_str.split('万円')[0].replace(',', '').replace('億', ''))
     race_result = rows[7 + ofs].select("td a")[0].string
     relatives = '、'.join([a.string for a in rows[9 + ofs].select("td a") if a.string])
 
@@ -426,15 +439,31 @@ def getHorseAdditionalInfo(html, offset=0):
             debut_weight = int(weight.replace('(0)', ''))
 
     blood = soup.select('table.blood_table tr td')
+    sire = blood[0].find('a').string
     sire_id = blood[0].find('a').get('href').split('/')[3]
+    mare = blood[3].find('a').string
     mare_id = blood[3].find('a').get('href').split('/')[3]
+    bms = blood[4].find('a').string
+    bms_id = blood[4].find('a').get('href').split('/')[3]
 
     result = {'id': horse_id,
               'name': name,
+              'sire': sire,
               'sire_id': sire_id,
+              'mare': mare,
               'mare_id': mare_id,
+              'bms': bms,
+              'bms_id': bms_id,
               'hair': hair,
+              'sex': sex,
               'birth_date': birth_date,
+              'trainer': trainer,
+              'trainer_id': trainer_id,
+              'owner': owner,
+              'owner_id': owner_id,
+              'breeder': breeder,
+              'breeder_id': breeder_id,
+              'prize': prize,
               'race_result': race_result,
               'sales_price': sales_price,
               'relatives': relatives,
@@ -603,7 +632,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/horse/2016100893/")
     # html = getPage("https://db.netkeiba.com/horse/2016103387/")
     # html = getPage("https://db.netkeiba.com/horse/2016104532/")
-    # result = getHorseAdditionalInfo(html)
+    html = getPage("https://db.netkeiba.com/horse/2001100925/")
+    result = getHorseAdditionalInfo(html)
 
     # html = getPage("https://db.netkeiba.com/horse/2004104258/")
     # html = getPage("https://db.netkeiba.com/horse/1992108561/")
@@ -624,8 +654,8 @@ if __name__ == "__main__":
     # html = getPage("https://db.netkeiba.com/breeder/373126/")
     # result = getBreederId(html)
 
-    html = getPage("https://db.netkeiba.com/horse/2014106083/")
-    result = getHorseRaceResults(html)
+    # html = getPage("https://db.netkeiba.com/horse/2014106083/")
+    # result = getHorseRaceResults(html)
 
     # html = getPage("https://db.netkeiba.com/horse/mare/2002100844/")
     # result = getMareCrops(html)
