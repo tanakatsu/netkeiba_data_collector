@@ -29,11 +29,9 @@ def main():
         results.append(result)
         sleep(0.2)
 
-    df_out = pd.DataFrame(results)
-
-    reordered_cols = ['id', 'name', 'sire_id', 'mare_id', 'hair', 'birth_date', 'race_result', 'debut_weight', 'sales_price', 'relatives']
-    df_out = df_out[reordered_cols]
-    df_out.to_csv(output_filename)
+    cols = ['id', 'name', 'sire_id', 'mare_id', 'hair', 'birth_date', 'race_result', 'debut_weight', 'sales_price', 'relatives', 'maruchi', 'kakuchi']
+    df_out = pd.DataFrame(results, columns=cols)
+    df_out.to_csv(output_filename, index=False)
 
 
 if __name__ == "__main__":
