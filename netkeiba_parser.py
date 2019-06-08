@@ -408,10 +408,18 @@ def getHorseProfile(html, offset=0):
     prof_table = soup.select("table.db_prof_table")[0]
     rows = prof_table.select("tr")
     birth_date = rows[0].select('td')[0].string.replace('年', '/').replace('月', '/').replace('日', '')
-    trainer = rows[1].select('td a')[0].string
-    trainer_id = rows[1].select('td a')[0].get("href").split('/')[2]
-    owner = rows[2].select('td a')[0].string
-    owner_id = rows[2].select('td a')[0].get("href").split('/')[2]
+    if rows[1].string is None:
+        trainer = None
+        trainer_id = None
+    else:
+        trainer = rows[1].select('td a')[0].string
+        trainer_id = rows[1].select('td a')[0].get("href").split('/')[2]
+    if rows[2].string is None:
+        owner = None
+        owner_id = None
+    else:
+        owner = rows[2].select('td a')[0].string
+        owner_id = rows[2].select('td a')[0].get("href").split('/')[2]
     if rows[3].find('th').string == '募集情報':
         ofs = 1
     else:
