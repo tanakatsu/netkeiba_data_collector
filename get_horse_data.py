@@ -20,6 +20,7 @@ def main():
     output_filename = args.output
     include_no_debut = args.include_no_debut
     results = []
+    next_page = 1
 
     # first page
     html = searchHorse(under_age=target_age, over_age=target_age)
@@ -29,7 +30,7 @@ def main():
         html = searchHorse(under_age=target_age, over_age=target_age, grade=[4, 3, 2, 1])  # debut horse only
     page_result = getHorseResult(html)
     serial = getSerial(html)
-    next_page = checkIfNextPageExists(html)
+    has_next_page = checkIfNextPageExists(html)
     results += page_result
     print('get {} ({})'.format(len(page_result), len(results)))
     sleep(1)
@@ -39,12 +40,13 @@ def main():
         if max_sample and len(results) >= max_sample:
             results = results[:max_sample]
             break
-        if not next_page:
+        if not has_next_page:
             break
+        next_page = next_page + 1
         html = getPageBySerial(serial, next_page)
         page_result = getHorseResult(html)
         serial = getSerial(html)
-        next_page = checkIfNextPageExists(html)
+        has_next_page = checkIfNextPageExists(html)
         results += page_result
         print('get {} ({})'.format(len(page_result), len(results)))
         sleep(1)
