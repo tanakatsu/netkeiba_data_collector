@@ -428,8 +428,12 @@ def getHorseProfile(html, offset=0):
         sales_price = rows[5 + ofs].select("td")[0].get_text().split('円')[0].replace('億', '').replace('万', '').replace(',', '')
     else:
         sales_price = None
-    breeder = rows[3 + ofs].select('td a')[0].string
-    breeder_id = rows[3 + ofs].select('td a')[0].get("href").split('/')[2]
+    if rows[3 + ofs].string is None:
+        breeder = None
+        breeder_id = None
+    else:
+        breeder = rows[3 + ofs].select('td a')[0].string
+        breeder_id = rows[3 + ofs].select('td a')[0].get("href").split('/')[2]
     prize = 0
     all_prizes = rows[6 + ofs].select('td')[0].string.strip().split('/')
     for prize_str in all_prizes:
