@@ -36,7 +36,8 @@ def getSerial(html):
 
 def checkIfNextPageExists(html):
     soup = BeautifulSoup(html, "html.parser")
-    next_page_elms = soup.select("div.common_pager a[title='次']")
+    # next_page_elms = soup.select("div.common_pager a[title='次']")
+    next_page_elms = soup.select('div.common_pager a[title="次"]')  # 上のコードだとうまく動かなくなった
     if len(next_page_elms) == 0:
         return None
     return True
