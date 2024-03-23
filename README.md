@@ -25,6 +25,13 @@ And
 
 - Python3
 
+### Preparation
+
+At first, you need to install required packages.
+```
+$ pip install -r requirements.txt
+```
+
 ### How to use
 
 - trainer leading
