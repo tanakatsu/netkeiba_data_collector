@@ -23,7 +23,6 @@ def main():
     next_page = 1
 
     # first page
-    html = searchHorse(under_age=target_age, over_age=target_age)
     if include_no_debut:
         html = searchHorse(under_age=target_age, over_age=target_age)
     else:
