@@ -3,7 +3,10 @@
 import pandas as pd
 from argparse import ArgumentParser
 from time import sleep
-from netkeiba_util import getSerial, getPageBySerial, checkIfNextPageExists, searchHorse
+from netkeiba_util import (
+    getSerial, getPageBySerial, checkIfNextPageExists,
+    getLastPageNo, searchHorse
+)
 from netkeiba_parser import getHorseResult
 
 
@@ -20,7 +23,6 @@ def main():
     output_filename = args.output
     include_no_debut = args.include_no_debut
     results = []
-    next_page = 1
 
     # first page
     if include_no_debut:
@@ -28,24 +30,21 @@ def main():
     else:
         html = searchHorse(under_age=target_age, over_age=target_age, grade=[4, 3, 2, 1])  # debut horse only
     page_result = getHorseResult(html)
-    serial = getSerial(html)
-    has_next_page = checkIfNextPageExists(html)
+    last_page_no = getLastPageNo(html)
     results += page_result
     print('get {} ({})'.format(len(page_result), len(results)))
     sleep(1)
 
     # after first page
-    while(True):
+    for page in range(2, last_page_no + 1):
         if max_sample and len(results) >= max_sample:
             results = results[:max_sample]
             break
-        if not has_next_page:
-            break
-        next_page = next_page + 1
-        html = getPageBySerial(serial, next_page)
+        if include_no_debut:
+            html = searchHorse(under_age=target_age, over_age=target_age, page=page)
+        else:
+            html = searchHorse(under_age=target_age, over_age=target_age, page=page, grade=[4, 3, 2, 1])  # debut horse only
         page_result = getHorseResult(html)
-        serial = getSerial(html)
-        has_next_page = checkIfNextPageExists(html)
         results += page_result
         print('get {} ({})'.format(len(page_result), len(results)))
         sleep(1)

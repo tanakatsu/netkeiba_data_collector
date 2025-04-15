@@ -38,12 +38,14 @@ def getHorseResult(html, offset=0):
         if data[9].a:
             owner = str(data[9].a.string)
             owner_id = str(data[9].a.get("href").replace('/owner/', '')[:-1])
+            owner_id = owner_id.replace("result/recent/", "")
         else:
             owner = None
             owner_id = None
         if data[10].a:
             breeder = str(data[10].a.string)
             breeder_id = str(data[10].a.get("href").replace('/breeder/', '')[:-1])
+            breeder_id = breeder_id.replace("result/recent/", "")
         else:
             breeder = None
             breeder_id = None

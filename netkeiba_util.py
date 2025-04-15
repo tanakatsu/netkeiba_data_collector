@@ -43,11 +43,20 @@ def checkIfNextPageExists(html):
     return True
 
 
+def getLastPageNo(html):
+    soup = BeautifulSoup(html, "html.parser")
+    links = soup.select('div.common_pager a[title="最後"]')
+    url = links[0].get('href')
+    page_no = int(re.search(r'page=(\d+)', url).group(1))
+    return page_no
+
+
 def searchHorse(**kwargs):
     url = 'https://db.netkeiba.com'
     params = {
         'pid': 'horse_list',
         'word': '',
+        'match': 'partial_match',
         'sire': '',
         'keito': '',
         'mare': '',
@@ -57,9 +66,16 @@ def searchHorse(**kwargs):
         'breeder': '',
         'under_age': '',
         'over_age': '',
+        'under_birthmonth': 1,
+        'over_birthmonth': 12,
+        'under_birthday': 1,
+        'over_birthday': 31,
+        'prize_min': '',
+        'prize_max': '',
         'sex': '',
         'sort': "prize",
-        'list': "100"
+        'list': "100",
+        'page': 1,
     }
 
     for k, v in kwargs.items():
@@ -70,7 +86,13 @@ def searchHorse(**kwargs):
         else:
             params[k] = v
 
-    res = requests.post(url, data=params)
+    # custom user agent header
+    # ないと400エラーになる
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36'
+    }
+
+    res = requests.get(url, params=params, headers=headers)
     res.encoding = res.apparent_encoding
     html = res.text
     return html
